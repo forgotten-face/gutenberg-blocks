@@ -1,0 +1,19 @@
+{
+  "name": "post-cgb-guten-block",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "cgb-scripts start",
+    "build": "cgb-scripts build",
+    "eject": "cgb-scripts eject"
+  },
+  "dependencies": {
+    "@wordpress/api-fetch": "^2.2.8",
+    "@wordpress/components": "^7.0.8",
+    "@wordpress/date": "^3.0.1",
+    "@wordpress/shortcode": "^2.1.0",
+    "cgb-scripts": "1.15.0",
+    "react": "^16.8.3",
+    "react-moment": "^0.8.4"
+  }
+}

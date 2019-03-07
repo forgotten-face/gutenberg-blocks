@@ -1,0 +1,125 @@
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-cgb-block-post {
+  color: #292929;
+  margin: 0 auto;
+  max-width: 740px; }
+
+.search-post__input {
+  margin-top: 10px;
+  font-size: 13px;
+  padding: 6px 8px;
+  -webkit-box-shadow: 0 0 0 transparent;
+          box-shadow: 0 0 0 transparent;
+  -webkit-transition: -webkit-box-shadow .1s linear;
+  transition: -webkit-box-shadow .1s linear;
+  -o-transition: box-shadow .1s linear;
+  transition: box-shadow .1s linear;
+  transition: box-shadow .1s linear, -webkit-box-shadow .1s linear;
+  border-radius: 4px;
+  border: 1px solid #8d96a0; }
+  .search-post__input:focus {
+    color: #191e23;
+    border-color: #00a0d2;
+    -webkit-box-shadow: 0 0 0 1px #00a0d2;
+            box-shadow: 0 0 0 1px #00a0d2;
+    outline: 2px solid transparent;
+    outline-offset: -2px; }
+
+.search-post__option {
+  background: none;
+  border: none;
+  border-bottom: 1px solid #8d96a0;
+  cursor: pointer;
+  padding: 5px; }
+  .search-post__option:hover {
+    background: #00759c;
+    color: #fff;
+    font-weight: bold; }
+
+.linked-post {
+  display: -ms-flexbox;
+  display: flex; }
+  .linked-post .linked-post__header {
+    background: #2275A4;
+    position: absolute;
+    top: -48px;
+    color: white;
+    width: 160px;
+    text-align: center;
+    padding: 10px 20px;
+    font-weight: bold; }
+  .linked-post .linked-post__thumbnail {
+    height: 150px;
+    width: 200px;
+    background-size: cover; }
+  .linked-post .linked-post__info {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: column;
+        flex-flow: column;
+    -ms-flex-pack: center;
+        justify-content: center;
+    margin-left: 10px; }
+    .linked-post .linked-post__info .linked-post__info__category {
+      line-height: 1.2em;
+      padding: 0;
+      margin: 0 !important;
+      font-weight: bold; }
+      .linked-post .linked-post__info .linked-post__info__category a {
+        text-decoration: none; }
+    .linked-post .linked-post__info .linked-post__info__date {
+      font-size: 14px;
+      padding: 0;
+      margin: 0 !important; }
+    .linked-post .linked-post__info .linked-post__info__title {
+      font-size: 20px;
+      line-height: 1.2em;
+      padding: 0;
+      margin: 0 !important; }
+      .linked-post .linked-post__info .linked-post__info__title a {
+        text-decoration: none;
+        color: #2275A4;
+        font-weight: bold; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.product-review__info__question {
+  margin-top: 30px; }
+  .product-review__info__question .info__question__label {
+    font-size: 1.5em;
+    font-weight: bold; }
+    .product-review__info__question .info__question__label i {
+      -webkit-transition: -webkit-transform .35s ease-in-out;
+      transition: -webkit-transform .35s ease-in-out;
+      -o-transition: transform .35s ease-in-out;
+      transition: transform .35s ease-in-out;
+      transition: transform .35s ease-in-out, -webkit-transform .35s ease-in-out; }
+  .product-review__info__question .info__question__response {
+    font-weight: 400;
+    max-height: 0;
+    overflow: hidden;
+    -webkit-transition: max-height 1s;
+    -o-transition: max-height 1s;
+    transition: max-height 1s; }
+  .product-review__info__question > .info__question__trigger {
+    display: none; }
+    .product-review__info__question > .info__question__trigger:checked ~ .info__question__response {
+      max-height: 100vh; }
+    .product-review__info__question > .info__question__trigger:checked ~ .info__question__label i {
+      -webkit-transform: rotate(180deg);
+          -ms-transform: rotate(180deg);
+              transform: rotate(180deg); }

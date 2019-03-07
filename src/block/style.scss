@@ -1,0 +1,75 @@
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+
+.wp-block-cgb-block-post  {
+  background: #F5F4F3;
+  color: #21405F;
+  margin: 0 auto;
+  max-width: 740px;
+}
+
+.linked-post {
+  display: flex;
+  position: relative;
+  margin-top: 80px;
+
+  .linked-post__header {
+	background: #2275A4;
+	position: absolute;
+	top: -48px;
+	color: white;
+	width: 160px;
+	text-align: center;
+	padding: 10px 20px;
+	font-weight: bold;
+  }
+
+  .linked-post__thumbnail {
+	min-height: 150px;
+	height: 150px;
+	min-width: 150px;
+	width: 150px;
+	background-size: cover;
+  }
+
+  .linked-post__info {
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+	margin-left: 10px;
+
+	.linked-post__info__category {
+	  line-height: 1.2em;
+	  padding: 0;
+	  margin: 0!important;
+
+	  a {
+		text-decoration: none;
+		font-weight: bold;
+	  }
+	}
+
+	.linked-post__info__date {
+	  font-size: 14px;
+	  padding: 0;
+	  margin: 0!important;
+	}
+
+	.linked-post__info__title {
+	  font-size: 20px;
+	  line-height: 1.2em;
+	  padding: 0;
+	  margin: 0!important;
+
+	  a {
+		text-decoration: none;
+		color: #2275A4;
+		font-weight: bold;
+	  }
+	}
+  }
+}
+

@@ -1,0 +1,97 @@
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+.wp-block-cgb-block-post {
+  background: #F5F4F3;
+  color: #21405F;
+  margin: 0 auto;
+  max-width: 740px; }
+
+.linked-post {
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  margin-top: 80px; }
+  .linked-post .linked-post__header {
+    background: #2275A4;
+    position: absolute;
+    top: -48px;
+    color: white;
+    width: 160px;
+    text-align: center;
+    padding: 10px 20px;
+    font-weight: bold; }
+  .linked-post .linked-post__thumbnail {
+    min-height: 150px;
+    height: 150px;
+    min-width: 150px;
+    width: 150px;
+    background-size: cover; }
+  .linked-post .linked-post__info {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: column;
+        flex-flow: column;
+    -ms-flex-pack: center;
+        justify-content: center;
+    margin-left: 10px; }
+    .linked-post .linked-post__info .linked-post__info__category {
+      line-height: 1.2em;
+      padding: 0;
+      margin: 0 !important; }
+      .linked-post .linked-post__info .linked-post__info__category a {
+        text-decoration: none;
+        font-weight: bold; }
+    .linked-post .linked-post__info .linked-post__info__date {
+      font-size: 14px;
+      padding: 0;
+      margin: 0 !important; }
+    .linked-post .linked-post__info .linked-post__info__title {
+      font-size: 20px;
+      line-height: 1.2em;
+      padding: 0;
+      margin: 0 !important; }
+      .linked-post .linked-post__info .linked-post__info__title a {
+        text-decoration: none;
+        color: #2275A4;
+        font-weight: bold; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.product-review__info__question {
+  margin-top: 30px; }
+  .product-review__info__question .info__question__label {
+    font-size: 1.5em;
+    font-weight: bold; }
+    .product-review__info__question .info__question__label i {
+      -webkit-transition: -webkit-transform .35s ease-in-out;
+      transition: -webkit-transform .35s ease-in-out;
+      -o-transition: transform .35s ease-in-out;
+      transition: transform .35s ease-in-out;
+      transition: transform .35s ease-in-out, -webkit-transform .35s ease-in-out; }
+  .product-review__info__question .info__question__response {
+    font-weight: 400;
+    max-height: 0;
+    overflow: hidden;
+    -webkit-transition: max-height 1s;
+    -o-transition: max-height 1s;
+    transition: max-height 1s; }
+  .product-review__info__question > .info__question__trigger {
+    display: none; }
+    .product-review__info__question > .info__question__trigger:checked ~ .info__question__response {
+      max-height: 100vh; }
+    .product-review__info__question > .info__question__trigger:checked ~ .info__question__label i {
+      -webkit-transform: rotate(180deg);
+          -ms-transform: rotate(180deg);
+              transform: rotate(180deg); }

@@ -1,0 +1,20 @@
+.product-review__info__question {
+  margin-top: 30px; }
+  .product-review__info__question .info__question__label {
+    font-size: 1.5em;
+    font-weight: bold; }
+    .product-review__info__question .info__question__label i {
+      transition: transform .35s ease-in-out; }
+  .product-review__info__question .info__question__response {
+    font-weight: 400;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1s; }
+  .product-review__info__question > .info__question__trigger {
+    display: none; }
+    .product-review__info__question > .info__question__trigger:checked ~ .info__question__response {
+      max-height: 100vh; }
+    .product-review__info__question > .info__question__trigger:checked ~ .info__question__label i {
+      transform: rotate(180deg); }
+
+/*# sourceMappingURL=editor.css.map */

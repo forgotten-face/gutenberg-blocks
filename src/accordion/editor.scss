@@ -1,0 +1,35 @@
+.product-review__info__question {
+  margin-top: 30px;
+
+  .info__question__label {
+	font-size: 1.5em;
+	font-weight: bold;
+
+	i {
+	  transition: transform .35s ease-in-out;
+	}
+  }
+
+  .info__question__response {
+	font-weight: 400;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 1s;
+  }
+
+  > .info__question__trigger {
+	display: none;
+
+	&:checked {
+	  ~ .info__question__response {
+		max-height: 100vh;
+	  }
+
+	  ~ .info__question__label {
+		i {
+		  transform: rotate(180deg);
+		}
+	  }
+	}
+  }
+}

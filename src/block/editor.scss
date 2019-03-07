@@ -1,0 +1,103 @@
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+
+.wp-block-cgb-block-post  {
+  color: $black;
+  margin: 0 auto;
+  max-width: 740px;
+}
+
+.search-post__input {
+  margin-top: 10px;
+  font-size: 13px;
+  padding: 6px 8px;
+  box-shadow: 0 0 0 transparent;
+  transition: box-shadow .1s linear;
+  border-radius: 4px;
+  border: 1px solid #8d96a0;
+
+  &:focus {
+	color: #191e23;
+	border-color: #00a0d2;
+	box-shadow: 0 0 0 1px #00a0d2;
+	outline: 2px solid transparent;
+	outline-offset: -2px;
+  }
+}
+
+.search-post__option {
+  background: none;
+  border: none;
+  border-bottom: 1px solid #8d96a0;
+  cursor: pointer;
+  padding: 5px;
+
+  &:hover {
+	background: #00759c;
+	color: #fff;
+	font-weight: bold;
+  }
+}
+
+
+.linked-post {
+  display: flex;
+
+  .linked-post__header {
+	background: #2275A4;
+	position: absolute;
+	top: -48px;
+	color: white;
+	width: 160px;
+	text-align: center;
+	padding: 10px 20px;
+	font-weight: bold;
+  }
+
+  .linked-post__thumbnail {
+	height: 150px;
+	width: 200px;
+	background-size: cover;
+  }
+
+  .linked-post__info {
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+	margin-left: 10px;
+
+	.linked-post__info__category {
+	  line-height: 1.2em;
+	  padding: 0;
+	  margin: 0!important;
+	  font-weight: bold;
+
+	  a {
+		text-decoration: none;
+	  }
+	}
+
+	.linked-post__info__date {
+	  font-size: 14px;
+	  padding: 0;
+	  margin: 0!important;
+	}
+
+	.linked-post__info__title {
+	  font-size: 20px;
+	  line-height: 1.2em;
+	  padding: 0;
+	  margin: 0!important;
+
+	  a {
+		text-decoration: none;
+		color: #2275A4;
+		font-weight: bold;
+	  }
+	}
+  }
+}
