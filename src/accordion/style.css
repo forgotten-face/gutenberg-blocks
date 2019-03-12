@@ -4,6 +4,7 @@
     font-size: 1.5em;
     font-weight: bold; }
     .product-review__info__question .info__question__label i {
+      margin-left: 15px;
       transition: transform .35s ease-in-out; }
   .product-review__info__question .info__question__response {
     font-weight: 400;

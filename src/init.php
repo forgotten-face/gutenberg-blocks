@@ -74,8 +74,6 @@ add_action( 'enqueue_block_editor_assets', 'post_cgb_editor_assets' );
 
 
 function block_dynamic_render_cb ( $att ) {
-	// Coming from RichText, each line is an array's element
-
 	$my_post = get_post($att['id']);
 	$category = get_the_category($my_post->ID)[0];
     ob_start();
@@ -92,7 +90,7 @@ function block_dynamic_render_cb ( $att ) {
         </a>
         <div class="linked-post__info">
             <p class="linked-post__info__category">
-                <a href="<?php echo esc_url( get_category_link( $category->term_id ) ); ?>" target="_blank">
+                <a href="<?php echo esc_url( get_category_link( $category->term_id ) ); ?>">
                     <?php echo $category->name;?>
                 </a>
             </p>
@@ -100,8 +98,11 @@ function block_dynamic_render_cb ( $att ) {
                 <?php echo get_post_time( get_option( 'date_format' ), false, $my_post, true ); ?>
             </p>
             <p class="linked-post__info__title">
-                <a href="<?php the_permalink($att['id']); ?>" target="_blank"><?php echo $my_post->post_title; ?></a>
+                <a href="<?php the_permalink($att['id']); ?>">
+                    <?php echo trim_characters( $my_post->post_title, 120, '...'); ?>
+                </a>
             </p>
+            <p class="linked-post__info__excerpt"><?php echo trim_characters( $my_post->post_content, 155, ' ...'); ?></p>
         </div>
     </div>
     <?php
@@ -152,3 +153,21 @@ function accordion_editor_assets() { // phpcs:ignore
 
 // Hook: Editor assets.
 add_action( 'enqueue_block_editor_assets', 'accordion_editor_assets' );
+
+function trim_characters( $text, $length = 160, $append = '&hellip;' ) {
+
+    $length = (int) $length;
+    $text = trim( strip_tags( $text ) );
+
+    if ( strlen( $text ) > $length ) {
+        $text = substr( $text, 0, $length + 1 );
+        $words = preg_split( "/[\s]|&nbsp;/", $text, -1, PREG_SPLIT_NO_EMPTY );
+        preg_match( "/[\s]|&nbsp;/", $text, $lastchar, 0, $length );
+        if ( empty( $lastchar ) )
+            array_pop( $words );
+
+        $text = implode( ' ', $words ) . $append;
+    }
+
+    return $text;
+}

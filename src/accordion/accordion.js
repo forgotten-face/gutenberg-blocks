@@ -8,31 +8,17 @@
 import './style.scss';
 import './editor.scss';
 
-const { __ } = wp.i18n; // Import __() from wp.i18n
-const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
-
+const { __ } = wp.i18n;
+const { registerBlockType } = wp.blocks;
 const {
 	RichText,
 } = wp.editor;
 
-/**
- * Register: aa Gutenberg Block.
- *
- * Registers a new block provided a unique name and an object defining its
- * behavior. Once registered, the block is made editor as an option to any
- * editor interface where blocks are implemented.
- *
- * @link https://wordpress.org/gutenberg/handbook/block-api/
- * @param  {string}   name     Block name.
- * @param  {Object}   settings Block settings.
- * @return {?WPBlock}          The block, if it has been successfully
- *                             registered; otherwise `undefined`.
- */
 registerBlockType( 'comparamais/accordion', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
 	title: __( 'Accordion - Comparamais' ), // Block title.
 	icon: 'shield', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'comparamais', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
 		__( 'Accordion - Comparamais' ),
 		__( 'Accordion - Comparamais' ),
@@ -40,38 +26,84 @@ registerBlockType( 'comparamais/accordion', {
 	attributes: {
 		title: {
 			type: 'string',
+			selector: 'span',
 		},
-		body: {
+		text: {
+			type: 'string',
+			selector: 'span',
+		},
+		blockId: {
 			type: 'string',
 		},
 	},
-
-	edit: function( props ) {
+	edit( { attributes, setAttributes } ) {
+		function onTitleChange( title ) {
+			const generator = new IDGenerator();
+			const blockId = generator.generate();
+			console.log(title);
+			setAttributes( { blockId: blockId, title: title } );
+		}
+		function onContentChange( text ) {
+			setAttributes( { text: text } );
+		}
 		return (
 			<div className="product-review__info__question">
-				<input type="checkbox" id="info-question-trigger-1" className="info__question__trigger" />
-				<label htmlFor="info-question-trigger-1" className="info__question__label">
-					<RichText value={ this.props.attributes.title } />
+				<input type="checkbox" id={ 'info-question-trigger-' + attributes.blockId } checked="checked" className="info__question__trigger" />
+				<label htmlFor={ 'info-question-trigger-' + attributes.blockId } className="info__question__label">
+					<RichText
+						tagName="span"
+						classNmae="title"
+						value={ attributes.title }
+						onChange={ ( title ) => onTitleChange( title ) }
+						placeholder="Enter Title"
+						keepPlaceholderOnFocus={ true }
+					/>
 					<i className="fas fa-caret-down"></i>
 				</label>
 				<div className="info__question__response">
-					<RichText value={ this.props.attributes.body } />
+					<RichText
+						tagName="span"
+						classNmae="content"
+						value={ attributes.text }
+						onChange={ ( text ) => onContentChange( text ) }
+						placeholder="Enter text"
+					/>
 				</div>
 			</div>
 		);
 	},
-	save: function( props ) {
+	save( { attributes } ) {
 		return (
 			<div className="product-review__info__question">
-				<input type="checkbox" id="info-question-trigger-1" className="info__question__trigger" />
-				<label htmlFor="info-question-trigger-1" className="info__question__label">
-					{ this.props.attributes.title }
+				<input type="checkbox" id={ 'info-question-trigger-' + attributes.blockId } className="info__question__trigger" />
+				<label htmlFor={ 'info-question-trigger-' + attributes.blockId } className="info__question__label">
+					<span className="title">{ attributes.title } </span>
 					<i className="fas fa-caret-down"></i>
 				</label>
 				<div className="info__question__response">
-					{ this.props.attributes.body }
+					<span className="content" dangerouslySetInnerHTML={ { __html: attributes.text } }> </span>
 				</div>
 			</div>
+
 		);
 	},
 } );
+
+function IDGenerator() {
+	this.length = 8;
+	this.timestamp = +new Date;
+
+	const _getRandomInt = function( min, max ) {
+		return Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+	};
+	this.generate = function() {
+		const ts = this.timestamp.toString();
+		const parts = ts.split( '' ).reverse();
+		let id = '';
+		for ( let i = 0; i < this.length; ++i ) {
+			const index = _getRandomInt( 0, parts.length - 1 );
+			id += parts[ index ];
+		}
+		return id;
+	};
+}

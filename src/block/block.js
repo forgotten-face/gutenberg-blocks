@@ -8,6 +8,8 @@ import apiFetch from '@wordpress/api-fetch';
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
+import InputRange from './InputRange';
+import Autocomplete from './Autocomplete';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
@@ -18,110 +20,7 @@ const {
 	RichText,
 } = wp.editor;
 
-class InputRange extends Component {
-	constructor( props ) {
-		super( props );
 
-		this.state = {
-			range: null,
-		};
-	}
-
-	changeValue( event ) {
-		this.setState( { range: event.target.value } );
-		this.props.changeRangePosition( event.target.value );
-	}
-
-	render() {
-		const value = ( this.state.range !== null ? this.state.range : this.props.rangePosition );
-		return (
-			<div className="components-range-control">
-				<input
-					className="components-range-control__slider"
-					type="range"
-					value={ value }
-					onChange={ ( event ) => { this.changeValue( event ) } }
-					min={ 0 }
-					max={ 100 } />
-				{ value }
-			</div>
-		);
-	}
-}
-
-class MyAutocomplete extends Component {
-	constructor( props ) {
-		super( props );
-
-		this.state = {
-			value: null,
-			posts: [],
-		};
-
-		this.setValue = this.setValue.bind( this );
-		this.updateOptions = this.updateOptions.bind( this );
-		this.changePostValue = this.changePostValue.bind( this );
-	}
-
-	setValue( value ) {
-		this.setState( { value } );
-		this.updateOptions( value );
-	}
-
-	updateOptions( value ) {
-		apiFetch( { path: '/comparamais/wp-json/wp/v2/posts?search=' + value } ).then( ( posts ) => {
-			this.setState( { posts } );
-		}
-		);
-	}
-
-	changePostValue( postId, postTitle ) {
-		this.setState( { value: postTitle } );
-		this.props.selectedPost( postId );
-	}
-
-	render() {
-		const searchValue = ( this.state.value !== null ? this.state.value : this.props.currentValue );
-		const autocompleters = [
-			{
-				name: 'fruit',
-				// The prefix that triggers this completer
-				triggerPrefix: '',
-				// The option data
-				options: this.state.posts,
-				// Returns a label for an option like "🍊 Orange"
-				getOptionLabel: option => (
-					<button className="search-post__option" onClick={ () => { this.changePostValue( option.id, option.title.rendered ); } }>
-						{ option.title.rendered }
-					</button>
-				),
-				// Declares that options should be matched by their name
-				getOptionKeywords: option => [ option.title.rendered ],
-				// Declares completions should be inserted as abbreviations
-				getOptionCompletion: option => (
-					<abbr title={ option.title.rendered }>{ option.title.rendered }</abbr>
-				),
-			}
-		];
-		return (
-			<div>
-				<RichText className="search-post__input" value={ searchValue } placeholder="Post Title" onChange={ this.setValue } autocompleters={ autocompleters }>
-					{ ( { isExpanded, listBoxId, activeId } ) => (
-						<div
-							suppressContentEditableWarning
-							aria-autocomplete="list"
-							aria-expanded={ isExpanded }
-							aria-owns={ listBoxId }
-							aria-activedescendant={ activeId }
-						>
-						</div>
-					) }
-				</RichText>
-			</div>
-		);
-	}
-
-};
 
 class mySelectPosts extends Component {
 	static getInitialState( selectedPost ) {
@@ -129,8 +28,8 @@ class mySelectPosts extends Component {
 			posts: [],
 			selectedPost: selectedPost,
 			post: {},
-			imagePositionX: 50,
-			imagePositionY: 50,
+			imagePositionX: '50',
+			imagePositionY: '50',
 		};
 	}
 
@@ -162,31 +61,36 @@ class mySelectPosts extends Component {
 
 	moveImageY( value ) {
 		this.setState( { imagePositionY: value } );
+		this.props.setAttributes( {
+			imagePositionY: this.state.imagePositionY,
+		} );
 	}
 
 	moveImageX( value ) {
 		this.setState( { imagePositionX: value } );
+		this.props.setAttributes( {
+			imagePositionX: this.state.imagePositionX,
+		} );
 	}
 
-	onChangeSelectPost( value ) {
+	onChangeSelectPost( post ) {
 		// Find the post
-		const post = this.state.posts.find( ( item ) => { return item.id === parseInt( value ) } );
 		// Set the state
-		this.setState( { selectedPost: parseInt( value ), post } );
+		this.setState( { selectedPost: parseInt( post.id ), post } );
 		const date = new Date( post.date );
 		const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 		const formattedDate = date.toLocaleString( 'pt-PT', dateOptions ).replace( /de /g, '' );
 		// Set the attributes
 		this.props.setAttributes( {
-			selectedPost: parseInt( value ),
+			selectedPost: parseInt( post.id ),
 			title: post.title.rendered,
 			link: post.link,
 			thumbnail: post.featured_image_urls.square[ 0 ],
 			date: formattedDate,
 			category: post.category_list,
 			id: post.id,
-			imagePositionX: this.state.imagePositionX,
-			imagePositionY: this.state.imagePositionY,
+			imagePositionX: '50',
+			imagePositionY: '50',
 		} );
 	}
 
@@ -203,21 +107,17 @@ class mySelectPosts extends Component {
 			output = __( 'No posts found. Please create some first.' );
 		}
 
-		if ( this.state.post.hasOwnProperty( 'title' ) ) {
-			console.log( this.state.post );
-			const date = new Date( this.state.post.date );
-			const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-			const formattedDate = date.toLocaleString( 'pt-PT', dateOptions ).replace( /de /g, '' );
+		if ( this.props.attributes.hasOwnProperty( 'title' ) ) {
 			output = <div className="linked-post">
 				<div className="linked-post__header">Leia Tamb&eacute;m</div>
-				<div className="linked-post__thumbnail" style={ { backgroundImage: 'url(' + this.state.post.featured_image_urls.square[ 0 ] + ')' , backgroundPosition: this.state.imagePositionX + '% ' + this.state.imagePositionY + '%' } }></div>
+				<div className="linked-post__thumbnail" style={ { backgroundImage: 'url(' + this.props.attributes.thumbnail + ')' , backgroundPosition: this.props.attributes.imagePositionX + '% ' + this.props.attributes.imagePositionY + '%' } }></div>
 				<div className="linked-post__info">
-					<p className="linked-post__info__category" dangerouslySetInnerHTML={ { __html: this.state.post.category_list } }></p>
+					<p className="linked-post__info__category" dangerouslySetInnerHTML={ { __html: this.props.attributes.category_list } }></p>
 					<p className="linked-post__info__date">
-						{ formattedDate }
+						{ this.props.attributes.date }
 					</p>
 					<p className="linked-post__info__title">
-						<a href={ this.state.post.link }>{ this.state.post.title.rendered }</a>
+						<a href={ this.props.attributes.link }>{ this.props.attributes.title }</a>
 					</p>
 				</div>
 			</div>;
@@ -230,7 +130,7 @@ class mySelectPosts extends Component {
 			!! this.props.isSelected && (
 				<InspectorControls key="inspector">
 					<p>Find Post</p>
-					<MyAutocomplete className="search-post" selectedPost={ this.onChangeSelectPost } currentValue={ this.props.attributes.title } />
+					<Autocomplete className="search-post" selectedPost={ this.onChangeSelectPost } currentValue={ this.props.attributes.title } />
 					<br />
 					<p>Align Post Image Horizontally</p>
 					<InputRange changeRangePosition={ this.moveImageX } rangePosition={ this.state.imagePositionX } />
@@ -306,7 +206,7 @@ registerBlockType( 'cgb/block-post', {
 		return (
 			<div className="linked-post">
 				<div className="linked-post__header">Leia Tamb&eacute;m</div>
-				<div className="linked-post__thumbnail" style={ { backgroundImage: 'url(' + this.state.post.featured_image_urls.square[ 0 ] + ')', backgroundPosition: this.state.imagePositionX + '% ' + this.state.imagePositionY + '%' } }></div>
+				<div className="linked-post__thumbnail" style={ { backgroundImage: 'url(' + this.state.post.featured_image_urls.square[ 0 ] + ')', backgroundPosition: props.attributes.imagePositionX + '% ' + props.attributes.imagePositionY + '%' } }></div>
 				<div className="linked-post__info">
 					<p className="linked-post__info__category" dangerouslySetInnerHTML={ { __html: this.state.post.category_list } }></p>
 					<p className="linked-post__info__date">
