@@ -1,11 +1,5 @@
-/**
- * BLOCK: post
- *
- * Registering a basic block with Gutenberg.
- * Simple block, renders and saves the same content without any interactivity.
- */
 import apiFetch from '@wordpress/api-fetch';
-//  Import CSS.
+
 import './style.scss';
 import './editor.scss';
 import InputRange from './InputRange';
@@ -45,11 +39,9 @@ class mySelectPosts extends Component {
 
 	getOptions() {
 		return (
-			apiFetch( { path: '/comparamais/wp-json/wp/v2/posts' } ).then( ( posts ) => {
+			apiFetch( { path: '/wp-json/wp/v2/posts' } ).then( ( posts ) => {
 				if ( posts && 0 !== this.state.selectedPost ) {
-					// If we have a selected Post, find that post and add it.
 					const post = posts.find( ( item ) => { return item.id === this.state.selectedPost; } );
-					// This is the same as { post: post, posts: posts }
 					this.setState( { post, posts } );
 				} else {
 					this.setState( { posts } );
@@ -74,13 +66,12 @@ class mySelectPosts extends Component {
 	}
 
 	onChangeSelectPost( post ) {
-		// Find the post
-		// Set the state
+
 		this.setState( { selectedPost: parseInt( post.id ), post } );
 		const date = new Date( post.date );
 		const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 		const formattedDate = date.toLocaleString( 'pt-PT', dateOptions ).replace( /de /g, '' );
-		// Set the attributes
+
 		this.props.setAttributes( {
 			selectedPost: parseInt( post.id ),
 			title: post.title.rendered,
@@ -143,28 +134,14 @@ class mySelectPosts extends Component {
 		];
 	}
 }
-/**
- * Register: aa Gutenberg Block.
- *
- * Registers a new block provided a unique name and an object defining its
- * behavior. Once registered, the block is made editor as an option to any
- * editor interface where blocks are implemented.
- *
- * @link https://wordpress.org/gutenberg/handbook/block-api/
- * @param  {string}   name     Block name.
- * @param  {Object}   settings Block settings.
- * @return {?WPBlock}          The block, if it has been successfully
- *                             registered; otherwise `undefined`.
- */
-registerBlockType( 'cgb/block-post', {
-	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'post - CGB Block' ), // Block title.
-	icon: 'shield', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+
+registerBlockType( 'comparamais/block-post', {
+	title: __( 'Internal Post link - Comparamais' ),
+	icon: 'shield',
+	category: 'common',
 	keywords: [
-		__( 'post — CGB Block' ),
-		__( 'CGB Example' ),
-		__( 'create-guten-block' ),
+		__( 'Internal Post link' ),
+		__( 'Internal Post link' ),
 	],
 	attributes: {
 		title: {
@@ -199,7 +176,6 @@ registerBlockType( 'cgb/block-post', {
 
 	edit: mySelectPosts,
 	function( props ) {
-		// Creates a <p class='wp-block-cgb-block-post'></p>.
 		const date = new Date( this.state.post.date );
 		const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 		const formattedDate = date.toLocaleString( 'pt-PT', dateOptions ).replace( /de /g, '' );

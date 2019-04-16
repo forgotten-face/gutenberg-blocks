@@ -1,6 +1,6 @@
 <?php
- register_block_type('cgb/block-post', array(
-            'render_callback' => 'hi_roy_render_callback',
+ register_block_type('comparamais/block-post', array(
+            'render_callback' => 'post_render_callback',
             'attributes' => array(
                 'post' => array(
                     'type' => 'integer'
@@ -8,7 +8,7 @@
             )
         )
     );
-    function hi_roy_render_callback( $attributes ){
+    function post_render_callback( $attributes ){
         $post = $attributes[ 'id' ];
         return '<div class="sldfjsdljf">' . $post . '/div>';
 

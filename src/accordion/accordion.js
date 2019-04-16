@@ -1,10 +1,3 @@
-/**
- * BLOCK: Accordion
- *
- * Registering a basic block with Gutenberg.
- * Simple block, renders and saves the same content without any interactivity.
- */
-//  Import CSS.
 import './style.scss';
 import './editor.scss';
 
@@ -15,10 +8,9 @@ const {
 } = wp.editor;
 
 registerBlockType( 'comparamais/accordion', {
-	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'Accordion - Comparamais' ), // Block title.
-	icon: 'shield', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
+	title: __( 'Accordion - Comparamais' ),
+	icon: 'shield',
+	category: 'common',
 	keywords: [
 		__( 'Accordion - Comparamais' ),
 		__( 'Accordion - Comparamais' ),

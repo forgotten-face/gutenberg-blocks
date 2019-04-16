@@ -24,7 +24,7 @@ class Autocomplete extends Component {
 	}
 
 	updateOptions( value ) {
-		apiFetch( { path: '/comparamais/wp-json/wp/v2/posts?search=' + value } ).then( ( posts ) => {
+		apiFetch( { path: '/wp-json/wp/v2/posts?search=' + value } ).then( ( posts ) => {
 			this.setState( { posts } );
 		} );
 	}
@@ -38,20 +38,15 @@ class Autocomplete extends Component {
 		const searchValue = ( this.state.value !== null ? this.state.value : this.props.currentValue );
 		const autocompleters = [
 			{
-				name: 'fruit',
-				// The prefix that triggers this completer
+				name: 'post',
 				triggerPrefix: '',
-				// The option data
 				options: this.state.posts,
-				// Returns a label for an option like "🍊 Orange"
 				getOptionLabel: option => (
 					<button className="search-post__option" onClick={ () => { this.changePostValue( option, option.title.rendered ); } }>
 						{ option.title.rendered }
 					</button>
 				),
-				// Declares that options should be matched by their name
 				getOptionKeywords: option => [ option.title.rendered ],
-				// Declares completions should be inserted as abbreviations
 				getOptionCompletion: option => (
 					<abbr title={ option.title.rendered }>{ option.title.rendered }</abbr>
 				),
